@@ -24,18 +24,102 @@ Another aspect is that the data set should be formatted in such a way that more 
 
 
 ##ALGORITHM:
+```
+~~~
 Importing the libraries
 Importing the dataset
 Taking care of missing data
 Encoding categorical data
 Normalizing the data
 Splitting the data into test and train
+~~~
+```
 
 ##PROGRAM:
-/Write your code here/
+```
+~~~
+import pandas as pd
+import numpy as np
+df = pd.read_csv("/content/Churn_Modelling.csv")
+df.info()
+df.isnull().sum()
+df.duplicated()
+df.describe()
+df['Exited'].describe()
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+df1 = df.copy()
+df1["Geography"] = le.fit_transform(df1["Geography"])
+df1["Gender"] = le.fit_transform(df1["Gender"])
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+df1[["CreditScore","Geography","Age","Tenure","Balance","NumOfProducts","EstimatedSalary"]] = pd.DataFrame(scaler.fit_transform(df1[["CreditScore","Geography","Age","Tenure","Balance","NumOfProducts","EstimatedSalary"]]))
+df1
+df1.describe()
+X = df1[["CreditScore","Geography","Gender","Age","Tenure","Balance","NumOfProducts","HasCrCard","IsActiveMember","EstimatedSalary"]].values
+print(X)
+y = df1.iloc[:,-1].values
+print(y)
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+print(X_train)
+print("Size of X_train: ",len(X_train))
+print(X_test)
+print("Size of X_test: ",len(X_test))
+X_train.shape
+~~~
+```
 
 ##OUTPUT:
-/ Show the result/
+
+##Dataset:
+
+![1](https://user-images.githubusercontent.com/93427183/191670956-f235f7b1-3a74-4884-b3c5-85950e8296b4.png)
+
+
+##Checking for Null Values:
+
+
+![2](https://user-images.githubusercontent.com/93427183/191670966-387b0dc2-874a-487a-8b42-e20ba029e3fd.png)
+
+
+##Checking for duplicate values:
+
+![3](https://user-images.githubusercontent.com/93427183/191670979-775abc9b-7817-4379-acc4-aa71447c97b1.png)
+
+
+##Describing Data:
+
+
+![4](https://user-images.githubusercontent.com/93427183/191670988-716d8115-f5ff-41ae-989c-11ca2df2634f.png)
+
+![5](https://user-images.githubusercontent.com/93427183/191671017-b13907a3-f3ff-40c9-82ba-3d6ecce49f2e.png)
+
+
+##X - Values:
+
+![6](https://user-images.githubusercontent.com/93427183/191671067-2ade047d-fc54-4b45-951d-485f1a988d24.png)
+
+
+##Y - Value:
+
+![7](https://user-images.githubusercontent.com/93427183/191671075-da1c6a9d-2782-4fe6-a9cb-061a25a3ed90.png)
+
+##X_train values and X_train Size:
+
+![8](https://user-images.githubusercontent.com/93427183/191671084-ea0b50f5-2f99-44f1-b0de-f6e43a2ddc19.png)
+
+##X_test values and X_test Size:
+
+![9](https://user-images.githubusercontent.com/93427183/191671107-01916613-1bef-4d41-9125-3509531ebb91.png)
+
+
+##X_train shape:
+
+![10](https://user-images.githubusercontent.com/93427183/191671113-667f40f1-d3bf-4f11-a393-c0111dd7518c.png)
+
 
 ##RESULT
-/Type your result here/
+
+Data preprocessing is performed in a data set downloaded from Kaggle.
